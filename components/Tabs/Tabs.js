@@ -41,7 +41,7 @@ class TabLink {
   };
 
   select() {
-    tabsManager.selectTab(this);
+    tabManager.selectTab(this);
   }
 }
 
@@ -64,4 +64,4 @@ class TabItem {
 
 let links = document.querySelectorAll(".tabs-link");
 
-let tabManager = new Tabs(links);
+let tabManager = new TabManager(links);
