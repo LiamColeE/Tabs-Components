@@ -1,12 +1,23 @@
-class Tabs {
+class TabManager {
   constructor(tabs){
     this.tabs = [];
     tabs.forEach((element) => {
       this.tabs.push(new TabLink(element));
     });
-    console.log(this.tabs);
 
-    this.selectedTab = tabs[0];
+    this.selectedTab = this.tabs[0];
+  }
+
+  selectTab(tab){
+    this.deselectTab();
+    this.selectedTab = tab;
+    this.selectedTab.element.classList.add("tabs-link-selected");
+    this.selectedTab.tabItem.element.classList.add("tabs-item-selected");
+  }
+
+  deselectTab(tab){
+    this.selectedTab.element.classList.remove("tabs-link-selected");
+    this.selectedTab.tabItem.element.classList.remove("tabs-item-selected");
   }
 }
 
@@ -30,23 +41,7 @@ class TabLink {
   };
 
   select() {
-    this.deselect();
-    // Add a class named "tabs-link-selected" to this link
-    // this.element;
-    this.element.classList.add("tabs-link-selected");
-
-    // Call the select method on the item associated with this link
-    this.tabItem.select();
-  }
-
-  deselect(){
-        // Get all of the elements with the tabs-link class
-        const links = document.querySelectorAll(".tabs-link");
-
-        // Using a loop or the forEach method remove the 'tabs-link-selected' class from all of the links
-        links.forEach((element) => {
-          element.classList.remove("tabs-link-selected");
-        });
+    tabsManager.selectTab(this);
   }
 }
 
@@ -54,22 +49,6 @@ class TabItem {
   constructor(element) {
     // Assign this.element to the passed in element
     this.element = element;
-  }
-
-  select() {
-    this.deselect();
-    // Add a class named "tabs-item-selected" to this element
-    this.element.classList.add("tabs-item-selected");
-  }
-
-  deselect(){
-        // Select all ".tabs-item" elements from the DOM
-        const items = document.querySelectorAll(".tabs-item");
-
-        // Remove the class "tabs-item-selected" from each element
-        items.forEach((element) => {
-          element.classList.remove("tabs-item-selected")
-        });
   }
 }
 
@@ -85,4 +64,4 @@ class TabItem {
 
 let links = document.querySelectorAll(".tabs-link");
 
-new Tabs(links);
+let tabManager = new Tabs(links);
